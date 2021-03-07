@@ -1,0 +1,18 @@
+name: CIs
+
+on: [push,pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+    - name: Run the test suite
+      run: |
+        gem install bundler -v 2.2.13
+        bundle install
+        bundle exec rspec
