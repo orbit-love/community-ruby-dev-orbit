@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 RSpec.describe DevOrbit::Client do
-  it 'initializes with arguments passed in directly' do
-    expect(DevOrbit::Client.new(
+  let(:subject) do
+    DevOrbit::Client.new(
       dev_api_key: '12345',
       dev_username: 'test',
       orbit_api_key: '12345',
-      orbit_workspace: 'test'
-    )).to be_truthy
+      orbit_workspace: 'test' 
+    )
+  end
+
+  it 'initializes with arguments passed in directly' do
+    expect(subject).to be_truthy
   end
 
   it 'initializes with credentials from environment variables' do

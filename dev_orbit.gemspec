@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json", "~> 2.5"
   spec.add_dependency "activesupport", "~> 6.1"
   spec.add_development_dependency "rspec", "~> 3.4"
+  spec.add_development_dependency "webmock", "~> 3.12"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

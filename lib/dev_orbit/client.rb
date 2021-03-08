@@ -35,7 +35,12 @@ class DevOrbit::Client
 
   # Fetch new comments from DEV and post them to the Orbit workspace
   def comments
-    DevOrbit::Dev.new(api_key: @dev_api_key, username: @dev_username).process_comments
+    DevOrbit::Dev.new(
+      api_key: @dev_api_key,
+      username: @dev_username,
+      workspace_id: @orbit_workspace,
+      orbit_api_key: @orbit_api_key
+    ).process_comments
   end
 
   def orbit

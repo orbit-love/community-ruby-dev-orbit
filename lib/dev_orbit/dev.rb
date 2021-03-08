@@ -8,6 +8,8 @@ class DevOrbit::Dev
   def initialize(params = {})
     @username = params.fetch(:username, ENV['DEV_USERNAME'])
     @api_key = params.fetch(:api_key, ENV['DEV_API_KEY'])
+    @workspace_id = params.fetch(:workspace_id, ENV['ORBIT_WORKSPACE_ID'])
+    @orbit_api_key = params.fetch(:orbit_api_key, ENV['ORBIT_API_KEY'])
   end
 
   def process_comments
@@ -15,9 +17,16 @@ class DevOrbit::Dev
 
     articles.each do |article|
       comments = get_article_comments(article['id'])
-      DevOrbit::Orbit.call(type: 'comments', data: { comments: comments, title: article['title'] }) unless comments.empty?
+      DevOrbit::Orbit.call(
+        type: 'comments',
+        data: { comments: comments, title: article[:title] },
+        workspace_id: @workspace_id,
+        api_key: @orbit_api_key
+      ) unless comments.empty?
     end
   end
+
+  private
 
   def get_articles
     url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
