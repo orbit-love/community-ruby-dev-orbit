@@ -8,7 +8,7 @@ class DevOrbit::Interactions::Comment
     @article_title = article_title
     @id = comment[:id_code]
     @created_at = comment[:created_at]
-    @commenter = construct_commenter(comment[:user])
+    @commenter = construct_commenter(comment[:user].transform_keys(&:to_sym))
     @workspace_id = workspace_id
     @api_key = api_key
 
@@ -31,19 +31,26 @@ class DevOrbit::Interactions::Comment
         key: "dev-comment-#{@id}",
         title: "Commented on #{@article_title}",
         occurred_at: @created_at,
+        member: {
+          name: @commenter[:name],
+          devto: @commenter[:username],
+        }
       },
-      member: {
-        name: @commenter[:name],
-        devto: @commenter[:username],
-      },
+      identity: {
+        source: 'devto',
+        username: @commenter[:username],
+      }
     }
 
+    require 'byebug'
+    byebug
+
     if @commenter[:twitter]
-      req.body[:member].merge!(twitter: @commenter[:twitter])
+      req.body[:activity][:member].merge!(twitter: @commenter[:twitter])
     end
 
     if @commenter[:github]
-      req.body[:member].merge!(github: @commenter[:github])
+      req.body[:activity][:member].merge!(github: @commenter[:github])
     end
 
     req.body = req.body.to_json
