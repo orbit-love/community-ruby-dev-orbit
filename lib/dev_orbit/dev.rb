@@ -19,7 +19,11 @@ class DevOrbit::Dev
       comments = get_article_comments(article['id'])
       DevOrbit::Orbit.call(
         type: 'comments',
-        data: { comments: comments, title: article['title'] },
+        data: {
+          comments: comments,
+          title: article['title'],
+          url: article['url']
+        },
         workspace_id: @workspace_id,
         api_key: @orbit_api_key
       ) unless comments.empty?

@@ -4,8 +4,9 @@ require 'net/http'
 require 'json'
 
 class DevOrbit::Interactions::Comment
-  def initialize(article_title:, comment:, workspace_id:, api_key:)
+  def initialize(article_title:, url:, comment:, workspace_id:, api_key:)
     @article_title = article_title
+    @url = url
     @id = comment[:id_code]
     @created_at = comment[:created_at]
     @commenter = construct_commenter(comment[:user].transform_keys(&:to_sym))
@@ -31,6 +32,7 @@ class DevOrbit::Interactions::Comment
         key: "dev-comment-#{@id}",
         title: "Commented on #{@article_title}",
         occurred_at: @created_at,
+        link: @url,
         member: {
           name: @commenter[:name],
           devto: @commenter[:username],
@@ -41,10 +43,7 @@ class DevOrbit::Interactions::Comment
         username: @commenter[:username],
       }
     }
-
-    require 'byebug'
-    byebug
-
+    
     if @commenter[:twitter]
       req.body[:activity][:member].merge!(twitter: @commenter[:twitter])
     end
