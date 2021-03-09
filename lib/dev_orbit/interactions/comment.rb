@@ -9,6 +9,7 @@ class DevOrbit::Interactions::Comment
     @url = url
     @id = comment[:id_code]
     @created_at = comment[:created_at]
+    @body = sanitize_comment(comment[:body_html])
     @commenter = construct_commenter(comment[:user].transform_keys(&:to_sym))
     @workspace_id = workspace_id
     @api_key = api_key
@@ -30,7 +31,8 @@ class DevOrbit::Interactions::Comment
       activity: {
         activity_type: 'dev:comment',
         key: "dev-comment-#{@id}",
-        title: "Commented on #{@article_title}",
+        title: "Commented on the DEV blog post: #{@article_title}",
+        description: @body,
         occurred_at: @created_at,
         link: @url,
         member: {
@@ -43,7 +45,7 @@ class DevOrbit::Interactions::Comment
         username: @commenter[:username],
       }
     }
-    
+
     if @commenter[:twitter]
       req.body[:activity][:member].merge!(twitter: @commenter[:twitter])
     end
@@ -70,5 +72,9 @@ class DevOrbit::Interactions::Comment
     hash.merge!('github': commenter[:github_username]) unless commenter[:github_username] == nil || commenter[:github_username] == ''
 
     hash
+  end
+
+  def sanitize_comment(comment)
+    comment.gsub!(/(<[^>]*>)|\n|\t/s) {" "}
   end
 end

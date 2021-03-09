@@ -10,7 +10,7 @@ class DevOrbit::Orbit
         DevOrbit::Interactions::Comment.new(
           article_title: data.transform_keys(&:to_sym)[:title], 
           comment: comment.transform_keys(&:to_sym), 
-          url: url,
+          url: data[:url],
           workspace_id: workspace_id,
           api_key: api_key
         )
