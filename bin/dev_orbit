@@ -22,5 +22,6 @@ require_relative '../scripts/check_comments'
 
 if check_comments
   puts "Checking for new DEV comments within the past day and posting them to your Orbit workspace..."
-  %x[ ruby scripts/check_comments.rb ]
+  ARGV[0] = 'render'
+  DevOrbit::Scripts::CheckComments.start(ARGV)
 end

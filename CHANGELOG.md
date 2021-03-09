@@ -5,3 +5,7 @@
 ## [0.0.2] - 2021-03-09
 
 - Add a CLI to the gem to run the gem's operations
+
+## [0.0.3] - 2021-03-09
+
+- Bug fix for the CLI functionality, now operational
