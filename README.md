@@ -1,5 +1,8 @@
 # DEV.to Interactions to Orbit Workspace
 
+[![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
+
 This is a Ruby gem that can be used to integrate your DEV interactions, like DEV comments on blog posts, into your organization's Orbit workspace.
 
 ## Installation
