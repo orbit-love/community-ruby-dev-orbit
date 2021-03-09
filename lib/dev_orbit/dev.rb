@@ -1,66 +1,69 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'json'
-require 'active_support/time'
+require "net/http"
+require "json"
+require "active_support/time"
 
-class DevOrbit::Dev
-  def initialize(params = {})
-    @username = params.fetch(:username, ENV['DEV_USERNAME'])
-    @api_key = params.fetch(:api_key, ENV['DEV_API_KEY'])
-    @workspace_id = params.fetch(:workspace_id, ENV['ORBIT_WORKSPACE_ID'])
-    @orbit_api_key = params.fetch(:orbit_api_key, ENV['ORBIT_API_KEY'])
-  end
-
-  def process_comments
-    articles = get_articles
-
-    articles.each do |article|
-      comments = get_article_comments(article['id'])
-      DevOrbit::Orbit.call(
-        type: 'comments',
-        data: {
-          comments: comments,
-          title: article['title'],
-          url: article['url']
-        },
-        workspace_id: @workspace_id,
-        api_key: @orbit_api_key
-      ) unless comments.empty?
+module DevOrbit
+  class Dev
+    def initialize(params = {})
+      @username = params.fetch(:username, ENV["DEV_USERNAME"])
+      @api_key = params.fetch(:api_key, ENV["DEV_API_KEY"])
+      @workspace_id = params.fetch(:workspace_id, ENV["ORBIT_WORKSPACE_ID"])
+      @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
     end
-  end
 
-  private
+    def process_comments
+      articles = get_articles
 
-  def get_articles
-    url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
-    https = Net::HTTP.new(url.host, url.port);
-    https.use_ssl = true
-    
-    request = Net::HTTP::Get.new(url)
+      articles.each do |article|
+        comments = get_article_comments(article["id"])
+        next if comments.empty?
 
-    response = https.request(request)
+        DevOrbit::Orbit.call(
+          type: "comments",
+          data: {
+            comments: comments,
+            title: article["title"],
+            url: article["url"]
+          },
+          workspace_id: @workspace_id,
+          api_key: @orbit_api_key
+        )
+      end
+    end
 
-    JSON.parse(response.body)
-  end
+    private
 
+    def get_articles
+      url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
 
-  def get_article_comments(id)
-    url = URI("https://dev.to/api/comments?a_id=#{id}")
-    https = Net::HTTP.new(url.host, url.port);
-    https.use_ssl = true
-    
-    request = Net::HTTP::Get.new(url)
+      request = Net::HTTP::Get.new(url)
 
-    response = https.request(request)
-    comments = JSON.parse(response.body)
+      response = https.request(request)
 
-    filter_comments(comments)
-  end
+      JSON.parse(response.body)
+    end
 
-  def filter_comments(comments)
-    comments.select { |comment|
-      comment['created_at'] >= 1.day.ago
-    }
+    def get_article_comments(id)
+      url = URI("https://dev.to/api/comments?a_id=#{id}")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Get.new(url)
+
+      response = https.request(request)
+      comments = JSON.parse(response.body)
+
+      filter_comments(comments)
+    end
+
+    def filter_comments(comments)
+      comments.select do |comment|
+        comment["created_at"] >= 1.day.ago
+      end
+    end
   end
 end

@@ -33,7 +33,7 @@ client = DevOrbit::Client.new(
 )
 ```
 
-### Get New DEV Comments
+### Post New DEV Comments to Orbit Workspace
 
 You can use the gem to get new DEV comments on your DEV user or organization by invoking the `#comments` method on your `client` instance:
 

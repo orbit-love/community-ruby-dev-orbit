@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "This gem integrates DEV blog interactions like comments, etc. into your Orbit workspace"
   spec.homepage      = "https://github.com/bencgreenberg/dev_orbit"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/bencgreenberg/dev_orbit"
@@ -29,10 +29,10 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
-  spec.add_dependency "zeitwerk", "~> 2.4"
+  spec.add_dependency "activesupport", "~> 6.1"
   spec.add_dependency "http", "~> 4.4"
   spec.add_dependency "json", "~> 2.5"
-  spec.add_dependency "activesupport", "~> 6.1"
+  spec.add_dependency "zeitwerk", "~> 2.4"
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "webmock", "~> 3.12"
 
