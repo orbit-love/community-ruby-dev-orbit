@@ -48,6 +48,16 @@ This method will fetch all your articles from DEV, gather their respective comme
 
 You can run this a daily cron job, for example, to add your newest DEV comments as activities in your Orbit workspace.
 
+### CLI
+
+You can also use the built-in CLI to perform the following operations:
+
+* Check for new DEV comments and post them to Orbit
+
+```bash
+$ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...' bundle exec dev_orbit --check-comments
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/bencgreenberg/dev_orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/bencgreenberg/dev_orbit/blob/master/CODE_OF_CONDUCT.md).

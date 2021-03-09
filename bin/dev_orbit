@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require 'optparse'
+
+check_comments = false
+
+options = {}
+choices = OptionParser.new do |opts|
+  opts.banner = "Usage: dev_orbit --check-comments"
+  opts.on("-h", "--help", "Prints help instructions") do
+    puts opts
+    exit
+  end
+  opts.on("--check-comments", "Check for new DEV comments") do
+    check_comments = true
+  end
+end.parse!
+
+$LOAD_PATH.unshift(File.expand_path('../lib/dev_orbit', __dir__))
+
+require_relative '../lib/dev_orbit'
+require_relative '../scripts/check_comments'
+
+if check_comments
+  puts "Checking for new DEV comments within the past day and posting them to your Orbit workspace..."
+  %x[ ruby scripts/check_comments.rb ]
+end
