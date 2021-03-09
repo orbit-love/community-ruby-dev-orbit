@@ -22,7 +22,7 @@
 # @param [Hash] params
 #
 # @return [DevOrbit::Client]
-# s
+#
 module DevOrbit
   class Client
     attr_accessor :dev_username, :dev_api_key, :orbit_workspace, :orbit_api_key
