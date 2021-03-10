@@ -1,5 +1,6 @@
 # DEV.to Interactions to Orbit Workspace
 
+![Build Status](https://github.com/bencgreenberg/dev_orbit/workflows/CI/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
 
