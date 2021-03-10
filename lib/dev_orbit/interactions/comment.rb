@@ -36,7 +36,7 @@ module DevOrbit
 
         response = http.request(req)
 
-        JSON.parse(response.body)
+        puts JSON.parse(response.body)
       end
 
       def construct_body
@@ -86,7 +86,9 @@ module DevOrbit
       end
 
       def sanitize_comment(comment)
-        ActionView::Base.full_sanitizer.sanitize(comment)
+        comment = ActionView::Base.full_sanitizer.sanitize(comment)
+
+        comment.gsub("\n", " ")
       end
     end
   end

@@ -13,3 +13,7 @@
 ## [0.0.4] - 2021-03-10
 
 - Bug fix for stripping the HTML from the DEV blog post comment body
+
+## [0.0.5] - 2021-03-10
+
+- Print out Orbit API response
