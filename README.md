@@ -19,6 +19,15 @@ gem 'dev_orbit'
 
 To instantiate a DevOrbit client, you can either pass along your credentials for DEV and Orbit directly to the instantiation or retain them in your environment variables.
 
+The following are the expected environment variables:
+
+```ruby
+ORBIT_API_KEY
+ORBIT_WORKSPACE_ID
+DEV_API_KEY
+DEV_USERNAME
+```
+
 With the credentials as environment variables:
 
 ```ruby

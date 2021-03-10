@@ -17,3 +17,8 @@
 ## [0.0.5] - 2021-03-10
 
 - Print out Orbit API response
+
+## [0.0.6] - 2021-03-10
+
+- Fix misnamed env var in client instantiation
+- Add a sample `.env` file
