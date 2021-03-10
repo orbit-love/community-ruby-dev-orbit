@@ -9,3 +9,7 @@
 ## [0.0.3] - 2021-03-09
 
 - Bug fix for the CLI functionality, now operational
+
+## [0.0.4] - 2021-03-10
+
+- Bug fix for stripping the HTML from the DEV blog post comment body

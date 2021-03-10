@@ -2,6 +2,7 @@
 
 require "net/http"
 require "json"
+require "action_view"
 
 module DevOrbit
   module Interactions
@@ -29,7 +30,17 @@ module DevOrbit
         req["Content-Type"] = "application/json"
         req["Authorization"] = "Bearer #{@api_key}"
 
-        req.body = {
+        req.body = construct_body
+
+        req.body = req.body.to_json
+
+        response = http.request(req)
+
+        JSON.parse(response.body)
+      end
+
+      def construct_body
+        hash = {
           activity: {
             activity_type: "dev:comment",
             key: "dev-comment-#{@id}",
@@ -48,16 +59,14 @@ module DevOrbit
           }
         }
 
-        req.body[:activity][:member].merge!(twitter: @commenter[:twitter]) if @commenter[:twitter]
+        hash[:activity][:member].merge!(twitter: @commenter[:twitter]) if @commenter[:twitter]
 
-        req.body[:activity][:member].merge!(github: @commenter[:github]) if @commenter[:github]
+        hash[:activity][:member].merge!(github: @commenter[:github]) if @commenter[:github]
 
-        req.body = req.body.to_json
-
-        response = http.request(req)
-
-        JSON.parse(response.body)
+        hash
       end
+
+      private
 
       def construct_commenter(commenter)
         hash = {
@@ -77,7 +86,7 @@ module DevOrbit
       end
 
       def sanitize_comment(comment)
-        comment.gsub!(/(<[^>]*>)|\n|\t/s) { " " }
+        ActionView::Base.full_sanitizer.sanitize(comment)
       end
     end
   end
