@@ -10,8 +10,7 @@ module DevOrbit
       desc "render", "check for new DEV comments and push them to Orbit"
       def render
         client = DevOrbit::Client.new
-        response = client.comments
-        puts response
+        client.comments
       end
     end
   end

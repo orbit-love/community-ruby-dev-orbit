@@ -29,7 +29,7 @@ module DevOrbit
 
     def initialize(params = {})
       @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
-      @orbit_workspace = params.fetch(:orbit_workspace, ENV["ORBIT_WORKSPACE"])
+      @orbit_workspace = params.fetch(:orbit_workspace, ENV["ORBIT_WORKSPACE_ID"])
       @dev_api_key = params.fetch(:dev_api_key, ENV["DEV_API_KEY"])
       @dev_username = params.fetch(:dev_username, ENV["DEV_USERNAME"])
     end
