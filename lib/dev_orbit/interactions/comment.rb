@@ -36,7 +36,9 @@ module DevOrbit
 
         response = http.request(req)
 
-        puts JSON.parse(response.body)
+        puts "New activity Orbit API call response body: #{response.body}"
+
+        JSON.parse(response.body)
       end
 
       def construct_body

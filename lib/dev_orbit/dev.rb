@@ -44,6 +44,8 @@ module DevOrbit
 
       response = https.request(request)
 
+      puts "Get articles response: #{response.body}"
+
       JSON.parse(response.body)
     end
 
