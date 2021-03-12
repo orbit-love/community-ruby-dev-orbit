@@ -22,3 +22,7 @@
 
 - Fix misnamed env var in client instantiation
 - Add a sample `.env` file
+
+## [0.0.7] - 2021-03-12
+
+- Check for valid JSON from API response before continuing
