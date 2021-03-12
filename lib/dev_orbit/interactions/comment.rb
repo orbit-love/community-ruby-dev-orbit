@@ -3,6 +3,7 @@
 require "net/http"
 require "json"
 require "action_view"
+require_relative "../utils"
 
 module DevOrbit
   module Interactions
@@ -36,9 +37,7 @@ module DevOrbit
 
         response = http.request(req)
 
-        puts "New activity Orbit API call response body: #{response.body}"
-
-        JSON.parse(response.body)
+        JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
       end
 
       def construct_body
