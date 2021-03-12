@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dev_orbit (0.0.4)
+    dev_orbit (0.0.6)
       actionview (~> 6.1)
       activesupport (~> 6.1)
       http (~> 4.4)
@@ -59,7 +59,7 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     minitest (5.14.4)
-    nokogiri (1.11.1-x86_64-darwin)
+    nokogiri (1.11.2-x86_64-darwin)
       racc (~> 1.4)
     parallel (1.20.1)
     parser (3.0.0.0)

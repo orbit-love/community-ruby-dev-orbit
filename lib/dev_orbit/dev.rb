@@ -3,6 +3,7 @@
 require "net/http"
 require "json"
 require "active_support/time"
+require_relative "utils"
 
 module DevOrbit
   class Dev
@@ -18,6 +19,7 @@ module DevOrbit
 
       articles.each do |article|
         comments = get_article_comments(article["id"])
+
         next if comments.empty?
 
         DevOrbit::Orbit.call(
@@ -44,7 +46,7 @@ module DevOrbit
 
       response = https.request(request)
 
-      JSON.parse(response.body)
+      JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
     end
 
     def get_article_comments(id)
@@ -55,7 +57,8 @@ module DevOrbit
       request = Net::HTTP::Get.new(url)
 
       response = https.request(request)
-      comments = JSON.parse(response.body)
+
+      comments = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
 
       filter_comments(comments)
     end
