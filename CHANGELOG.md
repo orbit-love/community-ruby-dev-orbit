@@ -26,3 +26,7 @@
 ## [0.0.7] - 2021-03-12
 
 - Check for valid JSON from API response before continuing
+
+## [0.0.8] - 2021-03-16
+
+- Early return if there are no new comments

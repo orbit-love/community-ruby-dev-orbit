@@ -20,7 +20,7 @@ module DevOrbit
       articles.each do |article|
         comments = get_article_comments(article["id"])
 
-        next if comments.empty?
+        next if comments.nil? || comments.empty?
 
         DevOrbit::Orbit.call(
           type: "comments",
@@ -59,6 +59,8 @@ module DevOrbit
       response = https.request(request)
 
       comments = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+
+      return if comments.nil? || comments.empty?
 
       filter_comments(comments)
     end
