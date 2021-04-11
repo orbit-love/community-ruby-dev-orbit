@@ -17,6 +17,17 @@ module DevOrbit
           )
         end
       end
+
+      if type == "followers"
+        DevOrbit::Interactions::Follower.new(
+          id: data[:follower]["id"],
+          name: data[:follower]["name"],
+          username: data[:follower]["username"],
+          url: data[:follower]["path"],
+          workspace_id: workspace_id,
+          api_key: api_key
+        )
+      end
     end
   end
 end

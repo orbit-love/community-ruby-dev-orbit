@@ -35,6 +35,23 @@ module DevOrbit
       end
     end
 
+    def process_followers
+      followers = get_followers
+
+      followers.each do |follower|
+        next if follower.nil? || follower.empty?
+
+        DevOrbit::Orbit.call(
+          type: "followers",
+          data: {
+            follower: follower
+          },
+          workspace_id: @workspace_id,
+          api_key: @orbit_api_key
+        )
+      end
+    end
+
     private
 
     def get_articles
@@ -43,6 +60,19 @@ module DevOrbit
       https.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+
+      response = https.request(request)
+
+      JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+    end
+
+    def get_followers
+      url = URI("https://dev.to/api/followers/users")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Get.new(url)
+      request["api_key"] = @api_key
 
       response = https.request(request)
 
