@@ -56,7 +56,16 @@ client.comments
 
 This method will fetch all your articles from DEV, gather their respective comments, filter them for anything within the past day, and then send them to your Orbit workspace via the Orbit API.
 
-You can run this a daily cron job, for example, to add your newest DEV comments as activities in your Orbit workspace.
+
+### Post New DEV Followers to Orbit Workspace
+
+You can use the gem to get new DEV followers by invoking the `#followers` method on your `client` instance:
+
+```ruby
+client.followers
+```
+
+You can run this either of those or any one of them as a daily cron job, for example, to add your newest DEV comments and/or followers as activities and members in your Orbit workspace.
 
 ### CLI
 
@@ -66,6 +75,12 @@ You can also use the built-in CLI to perform the following operations:
 
 ```bash
 $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...' bundle exec dev_orbit --check-comments
+```
+
+* Check for new DEV followers and post them to Orbit
+
+```bash
+$ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...' bundle exec dev_orbit --check-followers
 ```
 
 ## Contributing

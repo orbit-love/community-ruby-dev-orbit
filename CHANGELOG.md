@@ -30,3 +30,7 @@
 ## [0.0.8] - 2021-03-16
 
 - Early return if there are no new comments
+
+## [0.0.9] - 2021-04-11
+
+- Add check for new DEV followers functionality
