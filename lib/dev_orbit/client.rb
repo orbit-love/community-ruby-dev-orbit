@@ -44,6 +44,15 @@ module DevOrbit
       ).process_comments
     end
 
+    def followers
+      DevOrbit::Dev.new(
+        api_key: @dev_api_key,
+        username: @dev_username,
+        workspace_id: @orbit_workspace,
+        orbit_api_key: @orbit_api_key
+      ).process_followers
+    end
+
     def orbit
       DevOrbit::Orbit.new
     end

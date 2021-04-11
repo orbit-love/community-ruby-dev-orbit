@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dev_orbit (0.0.7)
+    dev_orbit (0.0.8)
       actionview (~> 6.1)
       activesupport (~> 6.1)
       http (~> 4.4)

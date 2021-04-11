@@ -26,6 +26,30 @@ RSpec.describe DevOrbit::Dev do
     end
   end
 
+  describe "#process_followers" do
+    it "posts followers to the Orbit workspace from DEV" do
+      stub_request(:get, "https://dev.to/api/followers/users").to_return(status: 200)
+      stub_request(:post, "https://app.orbit.love/api/v1/test/members").to_return(status: 200)
+      allow(subject).to receive(:get_followers).and_return(follower_stub)
+      allow(DevOrbit::Orbit).to receive(:call).and_return(follower_response_stub)
+
+      subject.process_followers
+    end
+  end
+
+  def follower_stub
+    [
+      {
+        "type_of": "user_follower",
+        "id": 12,
+        "name": "Mrs. Neda Morissette",
+        "path": "/nedamrsmorissette",
+        "username": "nedamrsmorissette",
+        "profile_image": "https://res.cloudinary.com/https://dev.to/profile.jpg"
+      }
+    ]
+  end
+
   def article_stub
     [
       {
@@ -169,6 +193,79 @@ RSpec.describe DevOrbit::Dev do
             "key": "custom:happened",
             "category": "custom",
             "weight": "1.0"
+          }
+        }
+      ]
+    }
+  end
+
+  def follower_response_stub
+    {
+      "data":{
+        "id":"3283105",
+        "type":"member",
+        "attributes":{
+          "activities_count":0,
+          "avatar_url":nil,
+          "bio":nil,
+          "birthday":nil,
+          "company":nil,
+          "created_at":"2021-04-11T14:19:33.981Z",
+          "deleted_at":nil,
+          "first_activity_occurred_at":nil,
+          "id":3283105,
+          "last_activity_occurred_at":nil,
+          "location":nil,
+          "name":"Mrs. Neda Morissette",
+          "orbit_level":nil,
+          "pronouns":nil,
+          "reach":nil,
+          "shipping_address":nil,
+          "slug":"nedamrsmorissette",
+          "source":"api",
+          "tag_list":[],
+          "tags":[],
+          "teammate":false,
+          "tshirt":nil,
+          "updated_at":"2021-04-11T14:19:34.117Z",
+          "merged_at":nil,
+          "url":"https://dev.to/nedamrsmorissette",
+          "orbit_url":"https://app.orbit.love/test/members/nedamrsmorissette",
+          "created":true,
+          "love":0.0,
+          "twitter":nil,
+          "github":nil,
+          "discourse":nil,
+          "email":nil,
+          "devto":"nedamrsmorissette",
+          "linkedin":nil,
+          "github_followers":nil,
+          "twitter_followers":nil,
+          "topics":nil,
+          "languages":nil
+        },
+        "relationships":{
+          "identities":{
+            "data":[
+              {
+                "id":"12",
+                "type":"devto_identity"
+              }
+            ]
+          }
+        }
+      },
+      "included":[
+        {
+          "id":"12",
+          "type":"devto_identity",
+          "attributes":{
+            "uid":nil,
+            "email":nil,
+            "username":"nedamrsmorissette",
+            "name":nil,
+            "source":"devto",
+            "source_host":"dev.to"
           }
         }
       ]
