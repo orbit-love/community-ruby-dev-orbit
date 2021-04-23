@@ -97,7 +97,7 @@ module DevOrbit
 
     def filter_comments(comments)
       comments.select do |comment|
-        comment["created_at"] >= 1.day.ago
+        comment["created_at"] <= 1.day.ago
       end
     end
   end

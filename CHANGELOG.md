@@ -34,3 +34,7 @@
 ## [0.0.9] - 2021-04-11
 
 - Add check for new DEV followers functionality
+
+## [0.0.10] - 2021-04-23
+
+- Fix filter for DEV comments
