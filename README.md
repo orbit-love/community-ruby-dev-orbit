@@ -6,6 +6,9 @@
 
 This is a Ruby gem that can be used to integrate your DEV interactions, like DEV comments on blog posts, into your organization's Orbit workspace.
 
+|<p align="left">:sparkles:</p> The project is a *community initiative*, which means that the Orbit team does its best to maintain it and keep it up to date with any > recent API changes. We welcome community contributions to make sure that it stays current. <p align="right">:sparkles:</p>|
+|-----------------------------------------|
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -85,7 +88,7 @@ $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...'
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bencgreenberg/dev_orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/bencgreenberg/dev_orbit/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/orbit-love/community-dev-orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/orbit-love/community-dev-orbit/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
