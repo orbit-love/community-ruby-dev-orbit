@@ -6,7 +6,7 @@
 
 This is a Ruby gem that can be used to integrate your DEV interactions, like DEV comments on blog posts, into your organization's Orbit workspace.
 
-|<p align="left">:sparkles:</p> The project is a *community initiative*, which means that the Orbit team does its best to maintain it and keep it up to date with any > recent API changes. We welcome community contributions to make sure that it stays current. <p align="right">:sparkles:</p>|
+|<p align="left">:sparkles:</p> This is a *community project*. The Orbit team does its best to maintain it and keep it up to date with any recent API changes.<br/></br/>We welcome community contributions to make sure that it stays current. <p align="right">:sparkles:</p>|
 |-----------------------------------------|
 
 ## Installation
