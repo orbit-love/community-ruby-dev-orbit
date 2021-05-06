@@ -33,5 +33,5 @@ end
 if check_followers
   puts "Checking for new DEV followers posting them to your Orbit workspace..."
   ARGV[0] = 'render'
-  DevOrbit::Scripts::CheckComments.start(ARGV)
+  DevOrbit::Scripts::CheckFollowers.start(ARGV)
 end

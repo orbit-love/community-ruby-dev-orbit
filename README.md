@@ -1,6 +1,6 @@
 # DEV.to Interactions to Orbit Workspace
 
-![Build Status](https://github.com/bencgreenberg/dev_orbit/workflows/CI/badge.svg)
+![Build Status](https://github.com/orbit-love/community-ruby-dev-orbit/workflows/CI/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
 
@@ -88,7 +88,7 @@ $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...'
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/orbit-love/community-dev-orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/orbit-love/community-dev-orbit/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/orbit-love/community-ruby-dev-orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/orbit-love/community-ruby-dev-orbit/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -96,4 +96,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/bencgreenberg/dev_orbit/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/orbit-love/community-ruby-dev-orbit/blob/main/CODE_OF_CONDUCT.md).
