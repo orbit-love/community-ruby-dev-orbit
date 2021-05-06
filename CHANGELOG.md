@@ -38,3 +38,7 @@
 ## [0.0.10] - 2021-04-23
 
 - Fix filter for DEV comments
+## [0.1.0] - 2021-05-06
+
+- Correct CLI `CheckFollowers` action
+- Update gem specifications
