@@ -5,18 +5,18 @@ require_relative "lib/dev_orbit/version"
 Gem::Specification.new do |spec|
   spec.name          = "dev_orbit"
   spec.version       = DevOrbit::VERSION
-  spec.authors       = ["Ben Greenberg"]
-  spec.email         = ["ben.greenberg@hey.com"]
+  spec.authors       = ["Orbit DevRel", "Ben Greenberg"]
+  spec.email         = ["devrel@orbit.love"]
 
   spec.summary       = "Integrate DEV interactions into your Orbit workspace"
   spec.description   = "This gem integrates DEV blog interactions like comments, etc. into your Orbit workspace"
-  spec.homepage      = "https://github.com/bencgreenberg/dev_orbit"
+  spec.homepage      = "https://github.com/orbit-love/community-ruby-dev-orbit"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/bencgreenberg/dev_orbit"
-  spec.metadata["changelog_uri"] = "https://github.com/bencgreenberg/dev_orbit/blob/master/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/orbit-love/community-ruby-dev-orbit"
+  spec.metadata["changelog_uri"] = "https://github.com/orbit-love/community-ruby-dev-orbit/blob/main/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
