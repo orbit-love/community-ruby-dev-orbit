@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dev_orbit (0.0.8)
+    dev_orbit (0.1.0)
       actionview (~> 6.1)
       activesupport (~> 6.1)
       http (~> 4.4)
@@ -12,13 +12,13 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (6.1.3)
-      activesupport (= 6.1.3)
+    actionview (6.1.3.2)
+      activesupport (= 6.1.3.2)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activesupport (6.1.3)
+    activesupport (6.1.3.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -52,14 +52,16 @@ GEM
     http-form_data (2.3.0)
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
-    i18n (1.8.9)
+    i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     json (2.5.1)
-    loofah (2.9.0)
+    loofah (2.9.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     minitest (5.14.4)
-    nokogiri (1.11.2-x86_64-darwin)
+    nokogiri (1.11.3-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.11.2-x86_64-linux)
       racc (~> 1.4)
@@ -116,6 +118,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  arm64-darwin-20
   x86_64-darwin-19
   x86_64-linux
 
@@ -128,4 +131,4 @@ DEPENDENCIES
   webmock (~> 3.12)
 
 BUNDLED WITH
-   2.2.13
+   2.2.16

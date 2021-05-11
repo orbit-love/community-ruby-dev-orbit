@@ -44,6 +44,7 @@ module DevOrbit
         hash = {
           activity: {
             activity_type: "dev:comment",
+            tags: ["channel:dev"],
             key: "dev-comment-#{@id}",
             title: "Commented on the DEV blog post: #{@article_title}",
             description: @body,
