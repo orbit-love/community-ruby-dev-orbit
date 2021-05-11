@@ -30,6 +30,7 @@ module DevOrbit
         req["Accept"] = "application/json"
         req["Content-Type"] = "application/json"
         req["Authorization"] = "Bearer #{@api_key}"
+        req["User-Agent"] = "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
 
         req.body = construct_body
 
