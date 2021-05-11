@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "zeitwerk"
+require_relative "dev_orbit/version"
 
 module DevOrbit
   loader = Zeitwerk::Loader.new
