@@ -26,7 +26,7 @@ RSpec.describe DevOrbit::Interactions::Comment do
       stub_request(:post, "https://app.orbit.love/api/v1/1234/activities")
         .with(
           headers: { 'Authorization' => "Bearer 12345", 'Content-Type' => 'application/json' },
-          body: "{\"activity\":{\"activity_type\":\"dev:comment\",\"key\":\"dev-comment-1234\",\"title\":\"Commented on the DEV blog post: Sample Article\",\"description\":\"This is a great post! Now I need to learn everything here! 😂\",\"occurred_at\":\"2021-03-09\",\"link\":\"https://example.com/article\",\"member\":{\"name\":\"Worf\",\"devto\":\"worf\"}},\"identity\":{\"source\":\"devto\",\"username\":\"worf\"}}"
+          body: "{\"activity\":{\"activity_type\":\"dev:comment\",\"tags\":[\"channel:dev\"],\"key\":\"dev-comment-1234\",\"title\":\"Commented on the DEV blog post: Sample Article\",\"description\":\"This is a great post! Now I need to learn everything here! 😂\",\"occurred_at\":\"2021-03-09\",\"link\":\"https://example.com/article\",\"member\":{\"name\":\"Worf\",\"devto\":\"worf\"}},\"identity\":{\"source\":\"devto\",\"username\":\"worf\"}}"
         )
         .to_return(
           status: 200,
