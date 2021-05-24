@@ -1,11 +1,12 @@
 PATH
   remote: .
   specs:
-    dev_orbit (0.1.2)
+    dev_orbit (0.1.3)
       actionview (~> 6.1)
       activesupport (~> 6.1)
       http (~> 4.4)
       json (~> 2.5)
+      orbit_activities (~> 0.1)
       thor (~> 1.1)
       zeitwerk (~> 2.4)
 
@@ -65,6 +66,15 @@ GEM
       racc (~> 1.4)
     nokogiri (1.11.5-x86_64-linux)
       racc (~> 1.4)
+    nokogiri (1.11.3-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.3-x86_64-linux)
+      racc (~> 1.4)
+    orbit_activities (0.1.0)
+      http (~> 4.4)
+      json (~> 2.5)
+      rake (~> 13.0)
+      zeitwerk (~> 2.4)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -125,6 +135,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   dev_orbit!
+  orbit_activities
   rake (~> 13.0)
   rspec (~> 3.4)
   rubocop (~> 1.7)

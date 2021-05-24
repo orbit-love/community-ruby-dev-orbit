@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "zeitwerk"
+require "orbit_activities"
 require_relative "dev_orbit/version"
 
 module DevOrbit
