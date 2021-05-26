@@ -4,11 +4,14 @@
 [![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
 
-This is a Ruby gem that can be used to integrate your DEV interactions, like DEV comments on blog posts, into your organization's Orbit workspace.
+Add your DEV interactions into your Orbit workspace with this community-built integration.
+
+![New DEV blog post comment in Orbit screenshot](readme-images/new-comment-screenshot.png)
 
 |<p align="left">:sparkles:</p> This is a *community project*. The Orbit team does its best to maintain it and keep it up to date with any recent API changes.<br/><br/>We welcome community contributions to make sure that it stays current. <p align="right">:sparkles:</p>|
 |-----------------------------------------|
 
+![There are three ways to use this integration. Install package - build and run your own applications. Run the CLI - run on-demand directly from your terminal. Schedule an automation with GitHub - get started in minutes - no coding required](readme-images/ways-to-use.png)
 ## Installation
 
 Add this line to your application's Gemfile:
