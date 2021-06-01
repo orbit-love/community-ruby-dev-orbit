@@ -3,6 +3,7 @@ require 'optparse'
 
 check_comments = false
 check_followers = false
+check_org_comments = false
 
 options = {}
 choices = OptionParser.new do |opts|
@@ -17,6 +18,9 @@ choices = OptionParser.new do |opts|
   opts.on("--check-followers", "Check for new DEV followers") do
     check_followers = true
   end
+  opts.on("--check-organization-comments", "Check for new DEV comments for an organization") do
+    check_org_comments = true
+  end
 end.parse!
 
 $LOAD_PATH.unshift(File.expand_path('../lib/dev_orbit', __dir__))
@@ -24,6 +28,7 @@ $LOAD_PATH.unshift(File.expand_path('../lib/dev_orbit', __dir__))
 require_relative '../lib/dev_orbit'
 require_relative '../scripts/check_comments'
 require_relative '../scripts/check_followers'
+require_relative '../scripts/check_org_comments'
 
 if check_comments
   puts "Checking for new DEV comments within the past day and posting them to your Orbit workspace..."
@@ -35,4 +40,10 @@ if check_followers
   puts "Checking for new DEV followers posting them to your Orbit workspace..."
   ARGV[0] = 'render'
   DevOrbit::Scripts::CheckFollowers.start(ARGV)
+end
+
+if check_org_comments
+  puts "Checking for new DEV organization comments and posting them to your Orbit workspace..."
+  ARGV[0] = 'render'
+  DevOrbit::Scripts::CheckOrgComments.start(ARGV)
 end

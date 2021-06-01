@@ -9,13 +9,14 @@ module DevOrbit
   class Dev
     def initialize(params = {})
       @username = params.fetch(:username, ENV["DEV_USERNAME"])
+      @organization = params.fetch(:organization, ENV["DEV_ORGANIZATION"])
       @api_key = params.fetch(:api_key, ENV["DEV_API_KEY"])
       @workspace_id = params.fetch(:workspace_id, ENV["ORBIT_WORKSPACE_ID"])
       @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
     end
 
-    def process_comments
-      articles = get_articles
+    def process_comments(type:)
+      articles = get_articles(type: type)
 
       articles.each do |article|
         comments = get_article_comments(article["id"])
@@ -54,8 +55,15 @@ module DevOrbit
 
     private
 
-    def get_articles
-      url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
+    def get_articles(type:)
+      if type == "user"
+        url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
+      end
+
+      if type == "organization"
+        url = URI("https://dev.to/api/organizations/#{@organization}/articles")
+      end
+
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
 
