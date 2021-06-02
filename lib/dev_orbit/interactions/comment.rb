@@ -55,6 +55,8 @@ module DevOrbit
 
         hash[:activity][:member].merge!(github: @commenter[:github]) if @commenter[:github]
 
+        hash[:activity][:member].merge(url: @commenter[:url]) if @commenter[:url]
+
         hash
       end
 
@@ -72,6 +74,10 @@ module DevOrbit
 
         unless commenter[:github_username].nil? || commenter[:github_username] == ""
           hash.merge!('github': commenter[:github_username])
+        end
+
+        unless commenter[:website_url].nil? || commenter[:website_url] == ""
+          hash.merge('url': commenter[:website_url])
         end
 
         hash

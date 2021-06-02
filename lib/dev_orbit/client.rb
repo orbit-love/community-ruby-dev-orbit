@@ -13,6 +13,9 @@
 # @option params [String] :dev_api_key
 #   The API key for the DEV API
 #
+# @option params [String] :dev_organization
+#   The name of the organization in DEV to fetch interactions for
+#
 # @option params [String] :orbit_workspace
 #   The workspace ID for the Orbit workspace
 #
@@ -25,23 +28,24 @@
 #
 module DevOrbit
   class Client
-    attr_accessor :dev_username, :dev_api_key, :orbit_workspace, :orbit_api_key
+    attr_accessor :dev_username, :dev_api_key, :dev_organization, :orbit_workspace, :orbit_api_key
 
     def initialize(params = {})
       @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
       @orbit_workspace = params.fetch(:orbit_workspace, ENV["ORBIT_WORKSPACE_ID"])
       @dev_api_key = params.fetch(:dev_api_key, ENV["DEV_API_KEY"])
       @dev_username = params.fetch(:dev_username, ENV["DEV_USERNAME"])
+      @dev_organization = params.fetch(:dev_organization, ENV["DEV_ORGANIZATION"])
     end
 
     # Fetch new comments from DEV and post them to the Orbit workspace
-    def comments
+    def comments(type: "user")
       DevOrbit::Dev.new(
         api_key: @dev_api_key,
         username: @dev_username,
         workspace_id: @orbit_workspace,
         orbit_api_key: @orbit_api_key
-      ).process_comments
+      ).process_comments(type: type)
     end
 
     def followers
@@ -51,6 +55,15 @@ module DevOrbit
         workspace_id: @orbit_workspace,
         orbit_api_key: @orbit_api_key
       ).process_followers
+    end
+
+    def organization_comments(type: "organization")
+      DevOrbit::Dev.new(
+        api_key: @dev_api_key,
+        organization: @dev_organization,
+        workspace_id: @orbit_workspace,
+        orbit_api_key: @orbit_api_key
+      ).process_comments(type: type)
     end
 
     def orbit

@@ -26,13 +26,14 @@ gem 'dev_orbit'
 
 To instantiate a DevOrbit client, you can either pass along your credentials for DEV and Orbit directly to the instantiation or retain them in your environment variables.
 
-The following are the expected environment variables:
+The following are the environment variables, you can provide either or both a `DEV_USERNAME` or a `DEV_ORGANIZATION`:
 
 ```ruby
 ORBIT_API_KEY
 ORBIT_WORKSPACE_ID
 DEV_API_KEY
 DEV_USERNAME
+DEV_ORGANIZATION
 ```
 
 With the credentials as environment variables:
@@ -48,19 +49,30 @@ client = DevOrbit::Client.new(
   orbit_api_key: '...',
   orbit_workspace: '...',
   dev_api_key: '...',
-  dev_username: '...'
+  dev_username: '...',
+  dev_organization: '...'
 )
 ```
 
-### Post New DEV Comments to Orbit Workspace
+### Post New DEV Comments from a DEV User to Orbit Workspace
 
-You can use the gem to get new DEV comments on your DEV user or organization by invoking the `#comments` method on your `client` instance:
+You can use the gem to get new DEV comments on your DEV user by invoking the `#comments` method on your `client` instance:
 
 ```ruby
 client.comments
 ```
 
-This method will fetch all your articles from DEV, gather their respective comments, filter them for anything within the past day, and then send them to your Orbit workspace via the Orbit API.
+This method will fetch all your user articles from DEV, gather their respective comments, filter them for anything within the past day, and then send them to your Orbit workspace via the Orbit API.
+
+### Post New DEV Comments from a DEV Organization to Orbit Workspace
+
+You can use the gem to get new DEV comments on your DEV organization by invoking the `#comments` method on your `client` instance:
+
+```ruby
+client.organization_comments
+```
+
+This method will fetch all your organization articles from DEV, gather their respective comments, filter them for anything within the past day, and then send them to your Orbit workspace via the Orbit API.
 
 
 ### Post New DEV Followers to Orbit Workspace
@@ -77,16 +89,22 @@ You can run this either of those or any one of them as a daily cron job, for exa
 
 You can also use the built-in CLI to perform the following operations:
 
-* Check for new DEV comments and post them to Orbit
+* Check for new DEV user comments and post them to Orbit
 
 ```bash
 $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...' bundle exec dev_orbit --check-comments
 ```
 
-* Check for new DEV followers and post them to Orbit
+* Check for new DEV user followers and post them to Orbit
 
 ```bash
 $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...' bundle exec dev_orbit --check-followers
+```
+
+* Check for new DEV organization comments and post them to Orbit
+
+```bash
+$ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_ORGANIZATION='...' bundle exec dev_orbit --check-organization-comments
 ```
 
 ## Contributing

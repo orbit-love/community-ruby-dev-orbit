@@ -22,7 +22,7 @@ RSpec.describe DevOrbit::Dev do
       allow(DevOrbit::Orbit).to receive(:call).and_return(response_stub)
       allow(Time).to receive(:now).and_return("2021-03-08 15:07:55.2196 +0200")
 
-      subject.process_comments
+      subject.process_comments(type: "user")
     end
   end
 
