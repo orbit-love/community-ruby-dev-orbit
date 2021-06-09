@@ -19,7 +19,7 @@ RSpec.describe DevOrbit::Interactions::Follower do
       stub_request(:post, "https://app.orbit.love/api/v1/1234/members")
         .with(
           headers: { 'Authorization' => "Bearer 12345", 'Content-Type' => 'application/json' },
-          body: "{\"member\":{\"name\":\"Ben Greenberg\",\"devto\":\"bengreenberg\",\"url\":\"https://dev.to/bengreenberg\"}}"
+          body: "{\"member\":{\"name\":\"Ben Greenberg\",\"devto\":\"bengreenberg\"}}"
         ).to_return(
           status: 200,
           body: {
