@@ -43,8 +43,7 @@ module DevOrbit
         {
           member: {
             name: @name.include?("_") ? @name.split("_").map(&:capitalize).join(" ") : @name,
-            devto: @username,
-            url: "https://dev.to#{@url}"
+            devto: @username
           }
         }
       end
