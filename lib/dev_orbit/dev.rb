@@ -19,8 +19,6 @@ module DevOrbit
       articles = get_articles(type: type)
 
       articles.each do |article|
-        require 'byebug'
-        #byebug
         comments = get_article_comments(article["id"])
 
         next if comments.nil? || comments.empty?
