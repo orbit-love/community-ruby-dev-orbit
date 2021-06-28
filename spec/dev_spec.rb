@@ -24,7 +24,7 @@ RSpec.describe DevOrbit::Dev do
             headers: {
               "Accept" => "application/json",
               "Authorization" => "Bearer 12345",
-              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+              "User-Agent" => "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
             }
           )
           .to_return(
@@ -83,7 +83,7 @@ RSpec.describe DevOrbit::Dev do
               "Authorization" => "Bearer 12345",
               "Content-Type" => "application/json",
               "Host" => "app.orbit.love",
-              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+              "User-Agent" => "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
             }
           )
           .to_return(status: 200, body: {
@@ -96,7 +96,7 @@ RSpec.describe DevOrbit::Dev do
             headers: {
               "Accept" => "application/json",
               "Authorization" => "Bearer 12345",
-              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+              "User-Agent" => "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
             }
           )
           .to_return(
@@ -155,7 +155,7 @@ RSpec.describe DevOrbit::Dev do
               "Authorization" => "Bearer 12345",
               "Content-Type" => "application/json",
               "Host" => "app.orbit.love",
-              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+              "User-Agent" => "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
             }
           )
           .to_return(status: 200, body: {
@@ -168,7 +168,7 @@ RSpec.describe DevOrbit::Dev do
             headers: {
               "Accept" => "application/json",
               "Authorization" => "Bearer 12345",
-              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+              "User-Agent" => "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
             }
           )
           .to_return(
