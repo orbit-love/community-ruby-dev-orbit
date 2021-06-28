@@ -4,6 +4,7 @@ require 'optparse'
 check_comments = false
 check_followers = false
 check_org_comments = false
+historical_import = false
 
 options = {}
 choices = OptionParser.new do |opts|
@@ -21,6 +22,9 @@ choices = OptionParser.new do |opts|
   opts.on("--check-organization-comments", "Check for new DEV comments for an organization") do
     check_org_comments = true
   end
+  opts.on("--historical-import", "Performa historical import of all new DEV comments") do
+    historical_import = true
+  end
 end.parse!
 
 $LOAD_PATH.unshift(File.expand_path('../lib/dev_orbit', __dir__))
@@ -33,6 +37,7 @@ require_relative '../scripts/check_org_comments'
 if check_comments
   puts "Checking for new DEV comments within the past day and posting them to your Orbit workspace..."
   ARGV[0] = 'render'
+  ARGV[1] = historical_import
   DevOrbit::Scripts::CheckComments.start(ARGV)
 end
 
@@ -45,5 +50,6 @@ end
 if check_org_comments
   puts "Checking for new DEV organization comments and posting them to your Orbit workspace..."
   ARGV[0] = 'render'
+  ARGV[1] = historical_import
   DevOrbit::Scripts::CheckOrgComments.start(ARGV)
 end

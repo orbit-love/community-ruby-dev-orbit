@@ -8,8 +8,8 @@ module DevOrbit
   module Scripts
     class CheckComments < Thor
       desc "render", "check for new DEV comments and push them to Orbit"
-      def render
-        client = DevOrbit::Client.new
+      def render(*params)
+        client = DevOrbit::Client.new(historical_import: params[0])
         client.comments
       end
     end

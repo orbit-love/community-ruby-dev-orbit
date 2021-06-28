@@ -13,6 +13,7 @@ module DevOrbit
       @api_key = params.fetch(:api_key, ENV["DEV_API_KEY"])
       @workspace_id = params.fetch(:workspace_id, ENV["ORBIT_WORKSPACE_ID"])
       @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
+      @historical_import = params.fetch(:historical_import, false)
     end
 
     def process_comments(type:)
@@ -23,7 +24,7 @@ module DevOrbit
 
         next if comments.nil? || comments.empty?
 
-        DevOrbit::Orbit.call(
+        return DevOrbit::Orbit.new(
           type: "comments",
           data: {
             comments: comments,
@@ -31,8 +32,9 @@ module DevOrbit
             url: article["url"]
           },
           workspace_id: @workspace_id,
-          api_key: @orbit_api_key
-        )
+          api_key: @orbit_api_key,
+          historical_import: @historical_import
+        ).call
       end
     end
 
@@ -42,14 +44,15 @@ module DevOrbit
       followers.each do |follower|
         next if follower.nil? || follower.empty?
 
-        DevOrbit::Orbit.call(
+        DevOrbit::Orbit.new(
           type: "followers",
           data: {
             follower: follower
           },
           workspace_id: @workspace_id,
-          api_key: @orbit_api_key
-        )
+          api_key: @orbit_api_key,
+          historical_import: @historical_import
+        ).call
       end
     end
 
@@ -100,13 +103,7 @@ module DevOrbit
 
       return if comments.nil? || comments.empty?
 
-      filter_comments(comments)
-    end
-
-    def filter_comments(comments)
-      comments.select do |comment|
-        comment["created_at"] <= 1.day.ago
-      end
+      comments
     end
   end
 end
