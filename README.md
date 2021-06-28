@@ -54,6 +54,15 @@ client = DevOrbit::Client.new(
 )
 ```
 
+### Performing a Historical Import
+
+By default, the integration will only import comments that are newer than the newest DEV comment in your Orbit workspace. You may want to perform a one-time historical import to fetch all your previous DEV comments and bring them into your Orbit workspace. To do so, instantiate your `client` with the `historical_import` flag:
+
+```ruby
+client = DevOrbit::Client.new(
+  historical_import: true
+)
+```
 ### Post New DEV Comments from a DEV User to Orbit Workspace
 
 You can use the gem to get new DEV comments on your DEV user by invoking the `#comments` method on your `client` instance:
@@ -73,7 +82,6 @@ client.organization_comments
 ```
 
 This method will fetch all your organization articles from DEV, gather their respective comments, filter them for anything within the past day, and then send them to your Orbit workspace via the Orbit API.
-
 
 ### Post New DEV Followers to Orbit Workspace
 
@@ -106,6 +114,7 @@ $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_USERNAME='...'
 ```bash
 $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_ORGANIZATION='...' bundle exec dev_orbit --check-organization-comments
 ```
+**Add the `--historical-import` flag to your CLI command to perform a historical import of all your DEV comments using the CLI.**
 
 ## Contributing
 

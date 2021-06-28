@@ -22,13 +22,17 @@
 # @option params [String] :orbit_api_key
 #   The API key for the Orbit API
 #
+# @option params [Boolean] :historical_import
+#   Perform a historical import on all DEV comments
+#   Boolean, default to false
+#
 # @param [Hash] params
 #
 # @return [DevOrbit::Client]
 #
 module DevOrbit
   class Client
-    attr_accessor :dev_username, :dev_api_key, :dev_organization, :orbit_workspace, :orbit_api_key
+    attr_accessor :dev_username, :dev_api_key, :dev_organization, :orbit_workspace, :orbit_api_key, :historical_import
 
     def initialize(params = {})
       @orbit_api_key = params.fetch(:orbit_api_key, ENV["ORBIT_API_KEY"])
@@ -36,6 +40,7 @@ module DevOrbit
       @dev_api_key = params.fetch(:dev_api_key, ENV["DEV_API_KEY"])
       @dev_username = params.fetch(:dev_username, ENV["DEV_USERNAME"])
       @dev_organization = params.fetch(:dev_organization, ENV["DEV_ORGANIZATION"])
+      @historical_import = params.fetch(:historical_import, false)
     end
 
     # Fetch new comments from DEV and post them to the Orbit workspace
@@ -44,7 +49,8 @@ module DevOrbit
         api_key: @dev_api_key,
         username: @dev_username,
         workspace_id: @orbit_workspace,
-        orbit_api_key: @orbit_api_key
+        orbit_api_key: @orbit_api_key,
+        historical_import: @historical_import
       ).process_comments(type: type)
     end
 

@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json", "~> 2.5"
   spec.add_dependency "zeitwerk", "~> 2.4"
   spec.add_dependency "thor", "~> 1.1"
-  spec.add_dependency "orbit_activities", "~> 0.1"
+  spec.add_dependency "orbit_activities", "~> 0.2"
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "webmock", "~> 3.12"
 

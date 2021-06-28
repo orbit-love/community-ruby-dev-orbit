@@ -8,21 +8,218 @@ RSpec.describe DevOrbit::Dev do
       api_key: "12345",
       username: "test",
       workspace_id: "test",
-      orbit_api_key: "12345"
+      orbit_api_key: "12345",
+      historical_import: false
     )
   end
 
   describe "#process_comments" do
-    it "posts comments to the Orbit workspace from DEV" do
-      stub_request(:get, "https://dev.to/api/articles?top=1&username=test").to_return(status: 200)
-      stub_request(:get, "https://dev.to/api/comments?a_id=123").to_return(status: 200)
-      stub_request(:post, "https://app.orbit.love/api/v1/test/activities").to_return(status: 200)
-      allow(subject).to receive(:get_articles).and_return(article_stub)
-      allow(subject).to receive(:get_article_comments).and_return(comment_stub)
-      allow(DevOrbit::Orbit).to receive(:call).and_return(response_stub)
-      allow(Time).to receive(:now).and_return("2021-03-08 15:07:55.2196 +0200")
+    context "with historical import set to false and no newer items than the latest activity for the type in Orbit" do
+      it "posts no new comments to the Orbit workspace from DEV" do
+        stub_request(:get, "https://dev.to/api/articles?top=1&username=test").to_return(status: 200)
+        stub_request(:get, "https://dev.to/api/comments?a_id=123").to_return(status: 200)
+        stub_request(:post, "https://app.orbit.love/api/v1/test/activities").to_return(status: 200)
+        stub_request(:get, "https://app.orbit.love/api/v1/test/activities?activity_type=custom:dev:comment&direction=DESC&items=10")
+          .with(
+            headers: {
+              "Accept" => "application/json",
+              "Authorization" => "Bearer 12345",
+              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+            }
+          )
+          .to_return(
+            status: 200,
+            body: {
+              data: [
+                {
+                  id: "6",
+                  type: "spec_activity",
+                  attributes: {
+                    action: "spec_action",
+                    created_at: "2021-06-23T16:03:02.052Z",
+                    key: "spec_activity_key#1",
+                    occurred_at: "2021-04-01T16:03:02.050Z",
+                    type: "SpecActivity",
+                    tags: "[\"spec-tag-1\"]",
+                    orbit_url: "https://localhost:3000/test/activities/6",
+                    weight: "1.0"
+                  },
+                  relationships: {
+                    activity_type: {
+                      data: {
+                        id: "20",
+                        type: "activity_type"
+                      }
+                    }
+                  },
+                  member: {
+                    data: {
+                      id: "3",
+                      type: "member"
+                    }
+                  }
+                }
+              ]
+            }.to_json.to_s,
+            headers: {}
+          )
+        allow(subject).to receive(:get_articles).and_return(article_stub)
+        allow(subject).to receive(:get_article_comments).and_return(comment_stub)
 
-      subject.process_comments(type: "user")
+        expect(subject.process_comments(type: "user")).to eq("Sent 0 new DEV comments to your Orbit workspace")
+      end
+    end
+
+    context "with historical import set to false and newer items than the latest activity for the type in Orbit" do
+      it "posts the newer items to the Orbit workspace from DEV" do
+        stub_request(:get, "https://dev.to/api/articles?top=1&username=test").to_return(status: 200)
+        stub_request(:get, "https://dev.to/api/comments?a_id=123").to_return(status: 200)
+        stub_request(:post, "https://app.orbit.love/api/v1/test/activities")
+          .with(
+            body: "{\"activity\":{\"activity_type\":\"dev:comment\",\"tags\":[\"channel:dev\"],\"key\":\"dev-comment-m357\",\"title\":\"Commented on the DEV blog post: \",\"description\":\"  ...  ...   \",\"occurred_at\":\"2021-03-07T17:19:40.000Z\",\"link\":null,\"member\":{\"name\":\"Dario Waelchi\",\"devto\":\"dariowaelchi\"}},\"identity\":{\"source\":\"devto\",\"username\":\"dariowaelchi\"}}",
+            headers: {
+              "Accept" => "application/json",
+              "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+              "Authorization" => "Bearer 12345",
+              "Content-Type" => "application/json",
+              "Host" => "app.orbit.love",
+              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+            }
+          )
+          .to_return(status: 200, body: {
+            response: {
+              code: "SUCCESS"
+            }
+          }.to_json.to_s, headers: {})
+        stub_request(:get, "https://app.orbit.love/api/v1/test/activities?activity_type=custom:dev:comment&direction=DESC&items=10")
+          .with(
+            headers: {
+              "Accept" => "application/json",
+              "Authorization" => "Bearer 12345",
+              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+            }
+          )
+          .to_return(
+            status: 200,
+            body: {
+              data: [
+                {
+                  id: "6",
+                  type: "spec_activity",
+                  attributes: {
+                    action: "spec_action",
+                    created_at: "2021-02-23T16:03:02.052Z",
+                    key: "spec_activity_key#1",
+                    occurred_at: "2021-02-01T16:03:02.050Z",
+                    type: "SpecActivity",
+                    tags: "[\"spec-tag-1\"]",
+                    orbit_url: "https://localhost:3000/test/activities/6",
+                    weight: "1.0"
+                  },
+                  relationships: {
+                    activity_type: {
+                      data: {
+                        id: "20",
+                        type: "activity_type"
+                      }
+                    }
+                  },
+                  member: {
+                    data: {
+                      id: "3",
+                      type: "member"
+                    }
+                  }
+                }
+              ]
+            }.to_json.to_s,
+            headers: {}
+          )
+        allow(subject).to receive(:get_articles).and_return(article_stub)
+        allow(subject).to receive(:get_article_comments).and_return(comment_stub)
+
+        expect(subject.process_comments(type: "user")).to eq("Sent 1 new DEV comments to your Orbit workspace")
+      end
+    end
+
+    context "with historical import set to true" do
+      it "posts all comments to the Orbit workspace from DEV" do
+        stub_request(:get, "https://dev.to/api/articles?top=1&username=test").to_return(status: 200)
+        stub_request(:get, "https://dev.to/api/comments?a_id=123").to_return(status: 200)
+        stub_request(:post, "https://app.orbit.love/api/v1/test/activities")
+          .with(
+            body: "{\"activity\":{\"activity_type\":\"dev:comment\",\"tags\":[\"channel:dev\"],\"key\":\"dev-comment-m357\",\"title\":\"Commented on the DEV blog post: \",\"description\":\"  ...  ...   \",\"occurred_at\":\"2021-03-07T17:19:40.000Z\",\"link\":null,\"member\":{\"name\":\"Dario Waelchi\",\"devto\":\"dariowaelchi\"}},\"identity\":{\"source\":\"devto\",\"username\":\"dariowaelchi\"}}",
+            headers: {
+              "Accept" => "application/json",
+              "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+              "Authorization" => "Bearer 12345",
+              "Content-Type" => "application/json",
+              "Host" => "app.orbit.love",
+              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+            }
+          )
+          .to_return(status: 200, body: {
+            response: {
+              code: "SUCCESS"
+            }
+          }.to_json.to_s, headers: {})
+        stub_request(:get, "https://app.orbit.love/api/v1/test/activities?activity_type=custom:dev:comment&direction=DESC&items=10")
+          .with(
+            headers: {
+              "Accept" => "application/json",
+              "Authorization" => "Bearer 12345",
+              "User-Agent" => "community-ruby-dev-orbit/0.3.0"
+            }
+          )
+          .to_return(
+            status: 200,
+            body: {
+              data: [
+                {
+                  id: "6",
+                  type: "spec_activity",
+                  attributes: {
+                    action: "spec_action",
+                    created_at: "2021-06-23T16:03:02.052Z",
+                    key: "spec_activity_key#1",
+                    occurred_at: "2021-03-07T17:19:40.000Z",
+                    type: "SpecActivity",
+                    tags: "[\"spec-tag-1\"]",
+                    orbit_url: "https://localhost:3000/test/activities/6",
+                    weight: "1.0"
+                  },
+                  relationships: {
+                    activity_type: {
+                      data: {
+                        id: "20",
+                        type: "activity_type"
+                      }
+                    }
+                  },
+                  member: {
+                    data: {
+                      id: "3",
+                      type: "member"
+                    }
+                  }
+                }
+              ]
+            }.to_json.to_s,
+            headers: {}
+          )
+
+        client = DevOrbit::Dev.new(
+          api_key: "12345",
+          username: "test",
+          workspace_id: "test",
+          orbit_api_key: "12345",
+          historical_import: true
+        )
+        allow(client).to receive(:get_articles).and_return(article_stub)
+        allow(client).to receive(:get_article_comments).and_return(comment_stub)
+
+        expect(client.process_comments(type: "user")).to eq("Sent 1 new DEV comments to your Orbit workspace")
+      end
     end
   end
 
@@ -31,9 +228,9 @@ RSpec.describe DevOrbit::Dev do
       stub_request(:get, "https://dev.to/api/followers/users").to_return(status: 200)
       stub_request(:post, "https://app.orbit.love/api/v1/test/members").to_return(status: 200)
       allow(subject).to receive(:get_followers).and_return(follower_stub)
-      allow(DevOrbit::Orbit).to receive(:call).and_return(follower_response_stub)
+      allow_any_instance_of(DevOrbit::Orbit).to receive(:call).and_return(follower_response_stub)
 
-      subject.process_followers
+      expect(subject.process_followers).to be_truthy
     end
   end
 
@@ -201,71 +398,71 @@ RSpec.describe DevOrbit::Dev do
 
   def follower_response_stub
     {
-      "data":{
-        "id":"3283105",
-        "type":"member",
-        "attributes":{
-          "activities_count":0,
-          "avatar_url":nil,
-          "bio":nil,
-          "birthday":nil,
-          "company":nil,
-          "created_at":"2021-04-11T14:19:33.981Z",
-          "deleted_at":nil,
-          "first_activity_occurred_at":nil,
-          "id":3283105,
-          "last_activity_occurred_at":nil,
-          "location":nil,
-          "name":"Mrs. Neda Morissette",
-          "orbit_level":nil,
-          "pronouns":nil,
-          "reach":nil,
-          "shipping_address":nil,
-          "slug":"nedamrsmorissette",
-          "source":"api",
-          "tag_list":[],
-          "tags":[],
-          "teammate":false,
-          "tshirt":nil,
-          "updated_at":"2021-04-11T14:19:34.117Z",
-          "merged_at":nil,
-          "url":"https://dev.to/nedamrsmorissette",
-          "orbit_url":"https://app.orbit.love/test/members/nedamrsmorissette",
-          "created":true,
-          "love":0.0,
-          "twitter":nil,
-          "github":nil,
-          "discourse":nil,
-          "email":nil,
-          "devto":"nedamrsmorissette",
-          "linkedin":nil,
-          "github_followers":nil,
-          "twitter_followers":nil,
-          "topics":nil,
-          "languages":nil
+      "data": {
+        "id": "3283105",
+        "type": "member",
+        "attributes": {
+          "activities_count": 0,
+          "avatar_url": nil,
+          "bio": nil,
+          "birthday": nil,
+          "company": nil,
+          "created_at": "2021-04-11T14:19:33.981Z",
+          "deleted_at": nil,
+          "first_activity_occurred_at": nil,
+          "id": 3_283_105,
+          "last_activity_occurred_at": nil,
+          "location": nil,
+          "name": "Mrs. Neda Morissette",
+          "orbit_level": nil,
+          "pronouns": nil,
+          "reach": nil,
+          "shipping_address": nil,
+          "slug": "nedamrsmorissette",
+          "source": "api",
+          "tag_list": [],
+          "tags": [],
+          "teammate": false,
+          "tshirt": nil,
+          "updated_at": "2021-04-11T14:19:34.117Z",
+          "merged_at": nil,
+          "url": "https://dev.to/nedamrsmorissette",
+          "orbit_url": "https://app.orbit.love/test/members/nedamrsmorissette",
+          "created": true,
+          "love": 0.0,
+          "twitter": nil,
+          "github": nil,
+          "discourse": nil,
+          "email": nil,
+          "devto": "nedamrsmorissette",
+          "linkedin": nil,
+          "github_followers": nil,
+          "twitter_followers": nil,
+          "topics": nil,
+          "languages": nil
         },
-        "relationships":{
-          "identities":{
-            "data":[
+        "relationships": {
+          "identities": {
+            "data": [
               {
-                "id":"12",
-                "type":"devto_identity"
+                "id": "12",
+                "type": "devto_identity"
               }
             ]
           }
         }
       },
-      "included":[
+      "included": [
         {
-          "id":"12",
-          "type":"devto_identity",
-          "attributes":{
-            "uid":nil,
-            "email":nil,
-            "username":"nedamrsmorissette",
-            "name":nil,
-            "source":"devto",
-            "source_host":"dev.to"
+          "id": "12",
+          "type": "devto_identity",
+          "attributes": {
+            "uid": nil,
+            "email": nil,
+            "username": "nedamrsmorissette",
+            "name": nil,
+            "source": "devto",
+            "source_host": "dev.to"
           }
         }
       ]
