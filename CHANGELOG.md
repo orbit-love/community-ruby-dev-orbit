@@ -42,3 +42,6 @@
 
 - Correct CLI `CheckFollowers` action
 - Update gem specifications
+## [0.4.1] - 2021-07-01
+
+- Remove debugging output from processing DEV comments
