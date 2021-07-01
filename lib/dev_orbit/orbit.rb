@@ -21,12 +21,10 @@ module DevOrbit
         
         @data[:comments].each do |comment|
           unless @historical_import && @last_orbit_activity_timestamp
-            puts "inside first condition"
             next if comment["created_at"] || comment[:created_at] < @last_orbit_activity_timestamp unless @last_orbit_activity_timestamp.nil? 
           end
 
           if @last_orbit_activity_timestamp && @historical_import == false
-            puts "inside second condition"
             next if comment["created_at"] || comment[:created_at] < @last_orbit_activity_timestamp
           end
 
