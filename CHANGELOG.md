@@ -45,3 +45,7 @@
 ## [0.4.1] - 2021-07-01
 
 - Remove debugging output from processing DEV comments
+## [0.5.0] - 2021-07-08
+
+- Add pagination for all DEV interactions
+- Dynamically filter what to send to Orbit based on last item of that type in the Orbit workspace
