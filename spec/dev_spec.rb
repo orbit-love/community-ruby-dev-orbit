@@ -225,6 +225,15 @@ RSpec.describe DevOrbit::Dev do
 
   describe "#process_followers" do
     it "posts followers to the Orbit workspace from DEV" do
+      stub_request(:get, "https://app.orbit.love/api/v1/test/members?direction=DESC&identity=devto&items=10&sort=created_at").
+         with(
+           headers: {
+       	  'Accept'=>'application/json',
+       	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	  'Authorization'=>'Bearer 12345',
+       	  'User-Agent'=>"community-ruby-dev-orbit/#{DevOrbit::VERSION}"
+           }).
+         to_return(status: 200, body: "{\"data\": [{\"attributes\": {\"created_at\": \"2021-07-07T13:23:07.555Z\"}}]}", headers: {})
       stub_request(:get, "https://dev.to/api/followers/users").to_return(status: 200)
       stub_request(:post, "https://app.orbit.love/api/v1/test/members").to_return(status: 200)
       allow(subject).to receive(:get_followers).and_return(follower_stub)

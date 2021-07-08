@@ -19,6 +19,8 @@ module DevOrbit
     def process_comments(type:)
       articles = get_articles(type: type)
 
+      return if articles.empty? || articles.nil?
+
       articles.each do |article|
         comments = get_article_comments(article["id"])
 
@@ -41,53 +43,78 @@ module DevOrbit
     def process_followers
       followers = get_followers
 
-      followers.each do |follower|
-        next if follower.nil? || follower.empty?
+      return if followers.empty? || followers.nil?
 
-        DevOrbit::Orbit.new(
-          type: "followers",
-          data: {
-            follower: follower
-          },
-          workspace_id: @workspace_id,
-          api_key: @orbit_api_key,
-          historical_import: @historical_import
-        ).call
-      end
+      DevOrbit::Orbit.new(
+        type: "followers",
+        data: {
+          followers: followers
+        },
+        workspace_id: @workspace_id,
+        api_key: @orbit_api_key,
+        historical_import: @historical_import,
+        last_orbit_member_timestamp: last_orbit_member_timestamp
+      ).call
     end
 
     private
 
     def get_articles(type:)
-      if type == "user"
-        url = URI("https://dev.to/api/articles?username=#{@username}&top=1")
+      page = 1
+      articles = []
+      looped_at_least_once = false
+
+      while page >= 1
+        page += 1 if looped_at_least_once
+        url = URI("https://dev.to/api/articles?username=#{@username}&page=#{page}&per_page=1000") if type == "user"
+
+        if type == "organization"
+          url = URI("https://dev.to/api/organizations/#{@organization}/articles&page=#{page}&per_page=1000")
+        end
+
+        https = Net::HTTP.new(url.host, url.port)
+        https.use_ssl = true
+
+        request = Net::HTTP::Get.new(url)
+
+        response = https.request(request)
+
+        response = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+
+        articles << response unless response.empty? || response.nil?
+        looped_at_least_once = true
+
+        break if response.empty? || response.nil?
       end
 
-      if type == "organization"
-        url = URI("https://dev.to/api/organizations/#{@organization}/articles")
-      end
-
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-
-      request = Net::HTTP::Get.new(url)
-
-      response = https.request(request)
-
-      JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+      articles.flatten!
     end
 
     def get_followers
-      url = URI("https://dev.to/api/followers/users")
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
+      page = 1
+      followers = []
+      looped_at_least_once = false
 
-      request = Net::HTTP::Get.new(url)
-      request["api_key"] = @api_key
+      while page >= 1
+        page += 1 if looped_at_least_once
+        url = URI("https://dev.to/api/followers/users?page=#{page}&per_page=1000")
+        https = Net::HTTP.new(url.host, url.port)
+        https.use_ssl = true
 
-      response = https.request(request)
+        request = Net::HTTP::Get.new(url)
+        request["api_key"] = @api_key
 
-      JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+        response = https.request(request)
+
+        response = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
+
+        followers << response unless response.empty? || response.nil?
+        looped_at_least_once = true
+
+        break if response.empty? || response.nil?
+      end
+
+      followers.flatten!
     end
 
     def get_article_comments(id)
@@ -104,6 +131,27 @@ module DevOrbit
       return if comments.nil? || comments.empty?
 
       comments
+    end
+
+    def last_orbit_member_timestamp
+      @last_orbit_member_timestamp ||= begin
+        url = URI("https://app.orbit.love/api/v1/#{@workspace_id}/members?direction=DESC&items=10&identity=devto&sort=created_at")
+
+        http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = true
+
+        request = Net::HTTP::Get.new(url)
+        request["Accept"] = "application/json"
+        request["Authorization"] = "Bearer #{@orbit_api_key}"
+        request["User-Agent"] = "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
+
+        response = http.request(request)
+        response = JSON.parse(response.body)
+
+        return nil if response["data"].nil? || response["data"].empty?
+
+        response["data"][0]["attributes"]["created_at"]
+      end
     end
   end
 end
