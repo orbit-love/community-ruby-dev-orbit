@@ -49,3 +49,6 @@
 
 - Add pagination for all DEV interactions
 - Dynamically filter what to send to Orbit based on last item of that type in the Orbit workspace
+## [0.5.1] - 2021-07-11
+
+- Fix URL query params path for organization comments

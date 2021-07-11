@@ -69,7 +69,7 @@ module DevOrbit
         url = URI("https://dev.to/api/articles?username=#{@username}&page=#{page}&per_page=1000") if type == "user"
 
         if type == "organization"
-          url = URI("https://dev.to/api/organizations/#{@organization}/articles&page=#{page}&per_page=1000")
+          url = URI("https://dev.to/api/organizations/#{@organization}/articles?page=#{page}&per_page=1000")
         end
 
         https = Net::HTTP.new(url.host, url.port)
@@ -78,6 +78,8 @@ module DevOrbit
         request = Net::HTTP::Get.new(url)
 
         response = https.request(request)
+
+        break if response.code == "404"
 
         response = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
 
@@ -105,6 +107,8 @@ module DevOrbit
         request["api_key"] = @api_key
 
         response = https.request(request)
+
+        break if response.code == "404"
 
         response = JSON.parse(response.body) if DevOrbit::Utils.valid_json?(response.body)
 
