@@ -116,6 +116,12 @@ $ ORBIT_API_KEY='...' ORBIT_WORKSPACE='...' DEV_API_KEY='...' DEV_ORGANIZATION='
 ```
 **Add the `--historical-import` flag to your CLI command to perform a historical import of all your DEV comments using the CLI.**
 
+## GitHub Actions Automation Setup
+
+⚡ You can set up this integration in a matter of minutes using our GitHub Actions template. It will run regularly to add new activities to your Orbit workspace. All you need is a GitHub account.
+
+[See our guide for setting up this automation](https://github.com/orbit-love/github-actions-templates/blob/main/DEV/README.md).
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/orbit-love/community-ruby-dev-orbit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/orbit-love/community-ruby-dev-orbit/blob/main/CODE_OF_CONDUCT.md).
