@@ -60,7 +60,9 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     minitest (5.14.4)
-    nokogiri (1.11.7-arm64-darwin)
+    nokogiri (1.12.5-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     orbit_activities (0.2.2)
       http (~> 4.4)
@@ -121,6 +123,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   byebug
