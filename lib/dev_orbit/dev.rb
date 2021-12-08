@@ -76,6 +76,7 @@ module DevOrbit
         https.use_ssl = true
 
         request = Net::HTTP::Get.new(url)
+        request["User-Agent"] = "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
 
         response = https.request(request)
 
@@ -105,6 +106,7 @@ module DevOrbit
 
         request = Net::HTTP::Get.new(url)
         request["api_key"] = @api_key
+        request["User-Agent"] = "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
 
         response = https.request(request)
 
@@ -127,6 +129,7 @@ module DevOrbit
       https.use_ssl = true
 
       request = Net::HTTP::Get.new(url)
+      request["User-Agent"] = "community-ruby-dev-orbit/#{DevOrbit::VERSION}"
 
       response = https.request(request)
 
