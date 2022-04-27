@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
   spec.add_dependency "activesupport", "~> 6.1"
-  spec.add_dependency "actionview", "~> 6.1"
+  spec.add_dependency "actionview", ">= 6.1", "< 8.0"
   spec.add_dependency "http", "~> 4.4"
   spec.add_dependency "json", "~> 2.5"
   spec.add_dependency "zeitwerk", "~> 2.4"
