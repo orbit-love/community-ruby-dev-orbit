@@ -1,4 +1,8 @@
-# DEV.to Interactions to Orbit Workspace
+# ⛔️ DEPRECATED: DEV.to Interactions to Orbit Workspace
+
+This repository is no longer recommended or maintained and it will soon be marked as archived in Github. Huge thanks to the original authors and contributors for providing this Github Actions template to our community. To add DEV.to interactions to your Orbit workspace, you can now request access to the DEV.to integration under `Workspace Settings > Integrations`. 
+
+---
 
 ![Build Status](https://github.com/orbit-love/community-ruby-dev-orbit/workflows/CI/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
